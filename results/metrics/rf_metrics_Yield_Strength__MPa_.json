@@ -1,0 +1,9 @@
+{
+  "MAE": 30.97196965067494,
+  "RMSE": 41.2499261448718,
+  "R2": 0.9216281352353862,
+  "model": "RandomForest",
+  "target": "Yield Strength (MPa)",
+  "test_size": 0.2,
+  "seed": 42
+}

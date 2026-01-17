@@ -1,0 +1,9 @@
+{
+  "MAE": 2.4349443763479077,
+  "RMSE": 3.295779220082431,
+  "R2": 0.8268214325684972,
+  "model": "RandomForest",
+  "target": "Elongation (%)",
+  "test_size": 0.2,
+  "seed": 42
+}

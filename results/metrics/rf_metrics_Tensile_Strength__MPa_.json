@@ -1,0 +1,9 @@
+{
+  "MAE": 28.637741786539117,
+  "RMSE": 43.9302865573909,
+  "R2": 0.9043843376434026,
+  "model": "RandomForest",
+  "target": "Tensile Strength (MPa)",
+  "test_size": 0.2,
+  "seed": 42
+}

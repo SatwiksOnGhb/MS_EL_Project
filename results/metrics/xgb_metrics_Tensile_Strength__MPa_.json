@@ -1,0 +1,9 @@
+{
+  "MAE": 27.014650810553366,
+  "RMSE": 40.31482676306579,
+  "R2": 0.9194750319147093,
+  "model": "XGBoost",
+  "target": "Tensile Strength (MPa)",
+  "test_size": 0.2,
+  "seed": 42
+}

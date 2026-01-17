@@ -1,0 +1,9 @@
+{
+  "MAE": 31.06273678861258,
+  "RMSE": 42.39648366689503,
+  "R2": 0.9172108343431512,
+  "model": "XGBoost",
+  "target": "Yield Strength (MPa)",
+  "test_size": 0.2,
+  "seed": 42
+}

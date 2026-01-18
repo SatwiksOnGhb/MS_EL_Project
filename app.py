@@ -13,11 +13,18 @@ app.config['ALLOWED_EXTENSIONS'] = {'xlsx', 'xls', 'csv'}
 # Create uploads folder if it doesn't exist
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-# Load the trained models
+# Load the trained models (both Random Forest and XGBoost)
 MODELS = {
-    'elongation': joblib.load('models/rf_Elongation____.joblib'),
-    'tensile_strength': joblib.load('models/rf_Tensile_Strength__MPa_.joblib'),
-    'yield_strength': joblib.load('models/rf_Yield_Strength__MPa_.joblib')
+    'rf': {
+        'elongation': joblib.load('models/rf_Elongation____.joblib'),
+        'tensile_strength': joblib.load('models/rf_Tensile_Strength__MPa_.joblib'),
+        'yield_strength': joblib.load('models/rf_Yield_Strength__MPa_.joblib')
+    },
+    'xgb': {
+        'elongation': joblib.load('models/xgb_cv_Elongation_.joblib'),
+        'tensile_strength': joblib.load('models/xgb_cv_Tensile_Strength_MPa.joblib'),
+        'yield_strength': joblib.load('models/xgb_cv_Yield_Strength_MPa.joblib')
+    }
 }
 
 # Expected feature columns (all columns except the 3 target columns)
@@ -87,17 +94,21 @@ def predict():
         # Preprocess the data
         df_processed = preprocess_input_data(df)
 
-        # Make predictions for all three targets
+        # Make predictions for all three targets using both models
         predictions = []
         for idx, row in df_processed.iterrows():
             # Convert row to DataFrame for prediction (models expect DataFrame)
             X = pd.DataFrame([row], columns=df_processed.columns)
 
+            # Get predictions from both Random Forest and XGBoost
             pred = {
                 'row': idx + 1,
-                'elongation': round(float(MODELS['elongation'].predict(X)[0]), 2),
-                'tensile_strength': round(float(MODELS['tensile_strength'].predict(X)[0]), 2),
-                'yield_strength': round(float(MODELS['yield_strength'].predict(X)[0]), 2)
+                'rf_elongation': round(float(MODELS['rf']['elongation'].predict(X)[0]), 2),
+                'rf_tensile_strength': round(float(MODELS['rf']['tensile_strength'].predict(X)[0]), 2),
+                'rf_yield_strength': round(float(MODELS['rf']['yield_strength'].predict(X)[0]), 2),
+                'xgb_elongation': round(float(MODELS['xgb']['elongation'].predict(X)[0]), 2),
+                'xgb_tensile_strength': round(float(MODELS['xgb']['tensile_strength'].predict(X)[0]), 2),
+                'xgb_yield_strength': round(float(MODELS['xgb']['yield_strength'].predict(X)[0]), 2)
             }
             predictions.append(pred)
 

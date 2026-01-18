@@ -61,10 +61,18 @@
                     <table id="resultsTable">
                         <thead>
                             <tr>
-                                <th>Sample #</th>
-                                <th>Elongation (%)</th>
-                                <th>Tensile Strength (MPa)</th>
-                                <th>Yield Strength (MPa)</th>
+                                <th rowspan="2">Sample #</th>
+                                <th colspan="2">Elongation (%)</th>
+                                <th colspan="2">Tensile Strength (MPa)</th>
+                                <th colspan="2">Yield Strength (MPa)</th>
+                            </tr>
+                            <tr>
+                                <th class="model-header">RF</th>
+                                <th class="model-header">XGBoost</th>
+                                <th class="model-header">RF</th>
+                                <th class="model-header">XGBoost</th>
+                                <th class="model-header">RF</th>
+                                <th class="model-header">XGBoost</th>
                             </tr>
                         </thead>
                         <tbody id="resultsBody">
@@ -147,9 +155,12 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${pred.row}</td>
-                    <td>${pred.elongation}</td>
-                    <td>${pred.tensile_strength}</td>
-                    <td>${pred.yield_strength}</td>
+                    <td>${pred.rf_elongation}</td>
+                    <td>${pred.xgb_elongation}</td>
+                    <td>${pred.rf_tensile_strength}</td>
+                    <td>${pred.xgb_tensile_strength}</td>
+                    <td>${pred.rf_yield_strength}</td>
+                    <td>${pred.xgb_yield_strength}</td>
                 `;
                 resultsBody.appendChild(row);
             });
@@ -165,9 +176,9 @@
         }
 
         downloadBtn.addEventListener('click', function() {
-            const csv = ['Sample,Elongation (%),Tensile Strength (MPa),Yield Strength (MPa)'];
+            const csv = ['Sample,RF Elongation (%),XGBoost Elongation (%),RF Tensile Strength (MPa),XGBoost Tensile Strength (MPa),RF Yield Strength (MPa),XGBoost Yield Strength (MPa)'];
             predictionsData.forEach(pred => {
-                csv.push(`${pred.row},${pred.elongation},${pred.tensile_strength},${pred.yield_strength}`);
+                csv.push(`${pred.row},${pred.rf_elongation},${pred.xgb_elongation},${pred.rf_tensile_strength},${pred.xgb_tensile_strength},${pred.rf_yield_strength},${pred.xgb_yield_strength}`);
             });
 
             const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
